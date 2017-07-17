@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ZhihuDaily</string>
+    <string name="news_preview_image">LOADING</string>
+</resources>
