@@ -1,7 +1,6 @@
 package com.david.zhihudaily.zhihu;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.david.zhihudaily.network.RetrofitFactory;
 

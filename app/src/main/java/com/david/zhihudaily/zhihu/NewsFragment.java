@@ -1,6 +1,7 @@
 package com.david.zhihudaily.zhihu;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,8 +17,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.david.zhihudaily.adapter.NewsListAdapter;
 import com.david.zhihudaily.R;
+import com.david.zhihudaily.adapter.NewsListAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 
@@ -29,6 +37,8 @@ public class NewsFragment extends Fragment implements NewsContract.View {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout refreshLayout;
     private Unbinder unbinder;
     private NewsContract.Presenter mPresenter;
     private NewsListAdapter mAdapter;
@@ -53,8 +63,24 @@ public class NewsFragment extends Fragment implements NewsContract.View {
             , @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.news_list, container, false);
         unbinder = ButterKnife.bind(this, root);
+        initRefreshLayout();
         initRecyclerView();
         return root;
+    }
+
+    private void initRefreshLayout() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(1000);
+            }
+        });
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore(1000);
+            }
+        });
     }
 
     private void initRecyclerView() {

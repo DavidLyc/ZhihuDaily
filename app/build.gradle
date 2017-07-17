@@ -46,6 +46,7 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     compile "com.squareup.okhttp3:logging-interceptor:$loggingInterceptor_version"
     compile "com.squareup.okhttp3:okhttp:$okhttp_version"
+    compile "com.just.agentweb:agentweb:$agentweb_version"
 
     //glide
     compile "com.github.bumptech.glide:glide:$glide_version"
@@ -59,6 +60,9 @@ dependencies {
     //rx
     compile "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     compile "io.reactivex.rxjava2:rxjava:$rxjava_version"
+
+    //ui
+    compile "com.scwang.smartrefresh:SmartRefreshLayout:$SmartRefresh_version"
 
     testCompile "junit:junit:$junit_version"
 }
