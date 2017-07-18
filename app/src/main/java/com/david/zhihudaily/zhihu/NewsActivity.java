@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.david.zhihudaily.R;
 import com.david.zhihudaily.util.ActivityUtils;
+import com.david.zhihudaily.util.NetworkUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +26,10 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        if (!NetworkUtil.isNetworkAvailable()) {
+            Toast.makeText(this, "无网络连接!", Toast.LENGTH_SHORT).show();
+        }
 
         NewsFragment newsFragment = (NewsFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.container);

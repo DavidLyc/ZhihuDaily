@@ -1,4 +1,4 @@
-package com.david.zhihudaily;
+package com.david.zhihudaily.module;
 
 import android.app.Application;
 

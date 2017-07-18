@@ -5,7 +5,7 @@ import com.david.zhihudaily.BaseView;
 
 import java.util.ArrayList;
 
-public interface NewsContract {
+interface NewsContract {
 
     interface View extends BaseView<Presenter> {
         void addRecyclerViewItems(ArrayList<NewsModel> newslist);
