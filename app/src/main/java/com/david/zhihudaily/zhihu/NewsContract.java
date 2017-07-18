@@ -3,10 +3,13 @@ package com.david.zhihudaily.zhihu;
 import com.david.zhihudaily.BasePresenter;
 import com.david.zhihudaily.BaseView;
 
+import java.util.ArrayList;
+
 public interface NewsContract {
 
     interface View extends BaseView<Presenter> {
-        void addRecyclerViewItem(NewsModel news);
+        void addRecyclerViewItems(ArrayList<NewsModel> newslist);
+
     }
 
     interface Presenter extends BasePresenter {

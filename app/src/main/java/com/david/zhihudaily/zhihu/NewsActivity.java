@@ -3,18 +3,12 @@ package com.david.zhihudaily.zhihu;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.david.zhihudaily.R;
 import com.david.zhihudaily.util.ActivityUtils;
-import com.david.zhihudaily.util.NetworkUtil;
-import com.just.library.AgentWeb;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

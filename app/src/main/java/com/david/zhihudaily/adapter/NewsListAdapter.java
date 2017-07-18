@@ -1,5 +1,6 @@
 package com.david.zhihudaily.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.david.zhihudaily.R;
+import com.david.zhihudaily.zhihu.NewsListModel;
 import com.david.zhihudaily.zhihu.NewsModel;
 
 import java.util.ArrayList;
@@ -15,9 +19,11 @@ import java.util.ArrayList;
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder> {
 
     private ArrayList<NewsModel> mData;
+    private Context mContext;
 
-    public NewsListAdapter(ArrayList<NewsModel> data) {
+    public NewsListAdapter(ArrayList<NewsModel> data, Context context) {
         mData = data;
+        mContext = context;
     }
 
     @Override
@@ -30,18 +36,23 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         NewsModel news = mData.get(position);
         holder.mTextView.setText(news.getTitle());
-        holder.mImageView.setImageBitmap(news.getBitmapImage());
+        Glide.with(mContext)
+                .load(news.getImageUrl().get(0))
+                .asBitmap()
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.mImageView);
     }
 
     @Override
     public int getItemCount() {
-        return mData != null ? mData.size() : 0;
+        return mData == null ? 0 : mData.size();
     }
 
-    public void addItem(NewsModel news) {
-        int position = mData.size();
-        mData.add(position, news);
-        notifyItemInserted(position);
+    public void addAllItems(ArrayList<NewsModel> newslist) {
+        mData.clear();
+        mData.addAll(newslist);
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

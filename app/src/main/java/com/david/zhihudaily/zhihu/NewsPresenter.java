@@ -1,6 +1,7 @@
 package com.david.zhihudaily.zhihu;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.david.zhihudaily.network.RetrofitFactory;
 
@@ -19,8 +20,8 @@ public class NewsPresenter implements NewsContract.Presenter {
 
     @NonNull
     private final NewsContract.View mView;
-
     private CompositeDisposable mDisposables;
+    private boolean isFirstLoad = true;
 
     NewsPresenter(@NonNull NewsContract.View view) {
         mView = view;
@@ -30,7 +31,10 @@ public class NewsPresenter implements NewsContract.Presenter {
 
     @Override
     public void subscribe() {
-        getNewsList();
+        if (isFirstLoad) {
+            isFirstLoad = false;
+            getNewsList();
+        }
     }
 
     @Override
@@ -43,23 +47,16 @@ public class NewsPresenter implements NewsContract.Presenter {
         mDisposables.add(
                 RetrofitFactory.getInstance()
                         .getZhihuNews()
-                        .concatMap(new Function<NewsListModel, ObservableSource<NewsModel>>() {
-                            @Override
-                            public ObservableSource<NewsModel> apply(@NonNull NewsListModel newsListModel)
-                                    throws Exception {
-                                List<NewsModel> newsModels = newsListModel.getStories();
-                                return Observable.fromIterable(newsModels);
-                            }
-                        })
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<NewsModel>() {
-                            @Override
-                            public void accept(@NonNull NewsModel news)
-                                    throws Exception {
-                                mView.addRecyclerViewItem(news);
-                            }
-                        })
+                        .subscribe(new Consumer<NewsListModel>() {
+                                       @Override
+                                       public void accept(@NonNull NewsListModel newsListModel)
+                                               throws Exception {
+                                           mView.addRecyclerViewItems(newsListModel.getStories());
+                                       }
+                                   }
+                        )
         );
     }
 

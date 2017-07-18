@@ -1,11 +1,11 @@
 package com.david.zhihudaily.zhihu;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class NewsListModel {
 
     private String date;
-    private List<NewsModel> stories;
+    private ArrayList<NewsModel> stories;
 
     public NewsListModel() {
     }
@@ -14,7 +14,7 @@ public class NewsListModel {
         return date;
     }
 
-    public List<NewsModel> getStories() {
+    public ArrayList<NewsModel> getStories() {
         return stories;
     }
 }

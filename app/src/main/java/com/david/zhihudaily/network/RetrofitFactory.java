@@ -3,8 +3,6 @@ package com.david.zhihudaily.network;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,16 +58,6 @@ public class RetrofitFactory {
         return new GsonBuilder()
                 .serializeNulls()
                 .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
-                .setExclusionStrategies(new ExclusionStrategy() {
-                    @Override
-                    public boolean shouldSkipField(FieldAttributes f) {
-                        return f.getName().contains("bitmap");
-                    }
-
-                    @Override
-                    public boolean shouldSkipClass(Class<?> clazz) {
-                        return false;
-                    }
-                }).create();
+                .create();
     }
 }

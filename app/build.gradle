@@ -46,7 +46,6 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     compile "com.squareup.okhttp3:logging-interceptor:$loggingInterceptor_version"
     compile "com.squareup.okhttp3:okhttp:$okhttp_version"
-    compile "com.just.agentweb:agentweb:$agentweb_version"
 
     //glide
     compile "com.github.bumptech.glide:glide:$glide_version"
@@ -60,6 +59,11 @@ dependencies {
     //rx
     compile "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     compile "io.reactivex.rxjava2:rxjava:$rxjava_version"
+
+    //leakcanary
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
 
     //ui
     compile "com.scwang.smartrefresh:SmartRefreshLayout:$SmartRefresh_version"
