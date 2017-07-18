@@ -1,18 +1,12 @@
 package com.david.zhihudaily.zhihu;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.david.zhihudaily.network.RetrofitFactory;
 
-import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 

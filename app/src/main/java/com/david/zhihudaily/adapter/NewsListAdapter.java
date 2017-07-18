@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.david.zhihudaily.R;
-import com.david.zhihudaily.zhihu.NewsListModel;
 import com.david.zhihudaily.zhihu.NewsModel;
 
 import java.util.ArrayList;
