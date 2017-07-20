@@ -22,7 +22,10 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,14 +91,16 @@ public class NewsFragment extends Fragment implements NewsContract.View {
                 new OnItemClickListener() {
                     @Override
                     public void onClick(View view, NewsModel newsModel) {
-                        startActivity(new Intent(getContext(), DetailActivity.class));
+                        Intent intent = new Intent(getContext(), DetailActivity.class);
+                        startActivity(intent);
+                        EventBus.getDefault().postSticky(newsModel);
                     }
                 }
         );
     }
 
     @Override
-    public void addRecyclerViewItems(ArrayList<NewsModel> newslist) {
+    public void loadRecyclerViewItems(ArrayList<NewsModel> newslist) {
         mAdapter.addAllItems(newslist);
     }
 

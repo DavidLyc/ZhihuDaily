@@ -8,7 +8,7 @@ import java.util.ArrayList;
 interface NewsContract {
 
     interface View extends BaseView<Presenter> {
-        void addRecyclerViewItems(ArrayList<NewsModel> newslist);
+        void loadRecyclerViewItems(ArrayList<NewsModel> newslist);
 
     }
 

@@ -3,16 +3,23 @@ package com.david.zhihudaily.zhihu;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.david.zhihudaily.R;
+import com.david.zhihudaily.network.RetrofitFactory;
 import com.david.zhihudaily.util.ActivityUtils;
 import com.david.zhihudaily.util.NetworkUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 
 public class NewsActivity extends AppCompatActivity {
 
@@ -53,7 +60,7 @@ public class NewsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "开发中", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;

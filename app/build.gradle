@@ -65,6 +65,9 @@ dependencies {
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
 
+    //eventBus
+    compile "org.greenrobot:eventbus:$eventBus_version"
+
     //ui
     compile "com.scwang.smartrefresh:SmartRefreshLayout:$SmartRefresh_version"
 

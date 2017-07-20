@@ -25,8 +25,9 @@ ext {
     rxjava_version = "2.1.1"
     loggingInterceptor_version = "3.8.0"
     okhttp_version = "3.8.1"
-    SmartRefresh_version = "1.0.2-alpha-7"
+    SmartRefresh_version = "1.0.2-alpha-8"
     leakcanary_version = "1.5.1"
+    eventBus_version = "3.0.0"
 }
 
 

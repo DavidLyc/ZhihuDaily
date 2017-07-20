@@ -43,13 +43,14 @@ public class NewsPresenter implements NewsContract.Presenter {
                         .getZhihuNews()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Consumer<NewsListModel>() {
-                                       @Override
-                                       public void accept(@NonNull NewsListModel newsListModel)
-                                               throws Exception {
-                                           mView.addRecyclerViewItems(newsListModel.getStories());
-                                       }
-                                   }
+                        .subscribe(
+                                new Consumer<NewsListModel>() {
+                                    @Override
+                                    public void accept(@NonNull NewsListModel newsListModel)
+                                            throws Exception {
+                                        mView.loadRecyclerViewItems(newsListModel.getStories());
+                                    }
+                                }
                         )
         );
     }
