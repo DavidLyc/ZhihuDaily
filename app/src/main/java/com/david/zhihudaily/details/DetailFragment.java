@@ -12,7 +12,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.david.zhihudaily.R;
-import com.david.zhihudaily.zhihu.NewsFragment;
 import com.david.zhihudaily.zhihu.NewsModel;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,7 +21,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
 
 public class DetailFragment extends Fragment implements DetailContract.View {
 
