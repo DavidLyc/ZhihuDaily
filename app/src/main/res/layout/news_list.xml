@@ -28,4 +28,15 @@
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/datetime_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/datetime_picker"
+        android:tint="@android:color/white"
+        app:backgroundTint="@color/materialGreen"
+        app:elevation="@dimen/fab_elevation" />
+
 </FrameLayout>

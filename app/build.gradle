@@ -70,6 +70,9 @@ dependencies {
 
     //ui
     compile "com.scwang.smartrefresh:SmartRefreshLayout:$SmartRefresh_version"
+    compile("com.wdullaer:materialdatetimepicker:$timepicker_version") {
+        exclude group: 'com.android.support'
+    }
 
     testCompile "junit:junit:$junit_version"
 }

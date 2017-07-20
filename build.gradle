@@ -28,6 +28,7 @@ ext {
     SmartRefresh_version = "1.0.2-alpha-8"
     leakcanary_version = "1.5.1"
     eventBus_version = "3.0.0"
+    timepicker_version = "3.2.2"
 }
 
 

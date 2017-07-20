@@ -4,14 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.david.zhihudaily.R;
 import com.david.zhihudaily.adapter.NewsListAdapter;
@@ -21,14 +22,16 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class NewsFragment extends Fragment implements NewsContract.View {
@@ -37,10 +40,13 @@ public class NewsFragment extends Fragment implements NewsContract.View {
     RecyclerView mRecyclerView;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.datetime_picker)
+    FloatingActionButton mDatetimePicker;
     private Unbinder unbinder;
     private NewsContract.Presenter mPresenter;
     private NewsListAdapter mAdapter;
     private ArrayList<NewsModel> mNewsItems;
+    private DatePickerDialog dpd;
 
     public NewsFragment() {
     }
@@ -62,6 +68,23 @@ public class NewsFragment extends Fragment implements NewsContract.View {
         unbinder = ButterKnife.bind(this, root);
         initRefreshLayout();
         initRecyclerView();
+        Calendar now = Calendar.getInstance();
+        dpd = DatePickerDialog.newInstance(
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePickerDialog view, int year, int month, int day) {
+                        String time = "You picked the following time: " + year + "年" + (month + 1) + "月"
+                                + day + "月";
+                        Toast.makeText(getContext(), time, Toast.LENGTH_SHORT).show();
+                    }
+                },
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        dpd.setVersion(DatePickerDialog.Version.VERSION_1);
+        dpd.vibrate(false);
+        dpd.setAccentColor("#009788");
         return root;
     }
 
@@ -124,6 +147,11 @@ public class NewsFragment extends Fragment implements NewsContract.View {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.datetime_picker)
+    public void onViewClicked() {
+        dpd.show(getActivity().getFragmentManager(), NewsFragment.class.getSimpleName());
     }
 
 }
