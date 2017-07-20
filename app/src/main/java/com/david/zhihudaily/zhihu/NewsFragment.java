@@ -91,8 +91,7 @@ public class NewsFragment extends Fragment implements NewsContract.View {
                 new OnItemClickListener() {
                     @Override
                     public void onClick(View view, NewsModel newsModel) {
-                        Intent intent = new Intent(getContext(), DetailActivity.class);
-                        startActivity(intent);
+                        startActivity(new Intent(getContext(), DetailActivity.class));
                         EventBus.getDefault().postSticky(newsModel);
                     }
                 }
