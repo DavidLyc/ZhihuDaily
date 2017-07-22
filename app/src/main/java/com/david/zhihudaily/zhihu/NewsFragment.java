@@ -12,12 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.david.zhihudaily.R;
 import com.david.zhihudaily.adapter.NewsListAdapter;
 import com.david.zhihudaily.adapter.OnItemClickListener;
 import com.david.zhihudaily.details.DetailActivity;
+import com.david.zhihudaily.util.TimeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -28,6 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,12 +42,13 @@ public class NewsFragment extends Fragment implements NewsContract.View {
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.datetime_picker)
-    FloatingActionButton mDatetimePicker;
+    FloatingActionButton mFab;
     private Unbinder unbinder;
     private NewsContract.Presenter mPresenter;
     private NewsListAdapter mAdapter;
     private ArrayList<NewsModel> mNewsItems;
-    private DatePickerDialog dpd;
+    private DatePickerDialog mDpd;
+    private Calendar mNow;
 
     public NewsFragment() {
     }
@@ -66,26 +68,35 @@ public class NewsFragment extends Fragment implements NewsContract.View {
             , @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.news_list, container, false);
         unbinder = ButterKnife.bind(this, root);
+        initTimePicker();
         initRefreshLayout();
         initRecyclerView();
-        Calendar now = Calendar.getInstance();
-        dpd = DatePickerDialog.newInstance(
+        return root;
+    }
+
+    private void initTimePicker() {
+        mNow = Calendar.getInstance();
+        mNow.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+        mDpd = DatePickerDialog.newInstance(
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int month, int day) {
-                        String time = "You picked the following time: " + year + "年" + (month + 1) + "月"
-                                + day + "月";
-                        Toast.makeText(getContext(), time, Toast.LENGTH_SHORT).show();
+                        String date = TimeUtils.TransformDateToTimeString(year, month, day);
+                        mPresenter.getBeforeNews(date);
+                        mNow = Calendar.getInstance();
                     }
                 },
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH)
+                mNow.get(Calendar.YEAR),
+                mNow.get(Calendar.MONTH),
+                mNow.get(Calendar.DAY_OF_MONTH)
         );
-        dpd.setVersion(DatePickerDialog.Version.VERSION_1);
-        dpd.vibrate(false);
-        dpd.setAccentColor("#009788");
-        return root;
+        Calendar minDate = Calendar.getInstance();
+        minDate.set(2013, 4, 20);
+        mDpd.setMinDate(minDate);
+        mDpd.setVersion(DatePickerDialog.Version.VERSION_1);
+        mDpd.vibrate(false);
+        mDpd.setAccentColor("#009788");
+        mDpd.setMaxDate(mNow);
     }
 
     private void initRefreshLayout() {
@@ -93,13 +104,16 @@ public class NewsFragment extends Fragment implements NewsContract.View {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 mPresenter.getNewsList();
+                mNow = Calendar.getInstance();
                 refreshlayout.finishRefresh();
             }
         });
         mRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore(1000);
+                mNow.set(Calendar.DATE, mNow.get(Calendar.DATE) - 1);
+                mPresenter.getBeforeNews(TimeUtils.TransformDateToTimeString(mNow));
+                refreshlayout.finishLoadmore();
             }
         });
     }
@@ -114,16 +128,32 @@ public class NewsFragment extends Fragment implements NewsContract.View {
                 new OnItemClickListener() {
                     @Override
                     public void onClick(View view, NewsModel newsModel) {
+                        EventBus.getDefault().postSticky(newsModel.getId());
                         startActivity(new Intent(getContext(), DetailActivity.class));
-                        EventBus.getDefault().postSticky(newsModel);
                     }
                 }
         );
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    mFab.hide();
+                } else {
+                    mFab.show();
+                }
+            }
+        });
     }
 
     @Override
     public void loadRecyclerViewItems(ArrayList<NewsModel> newslist) {
-        mAdapter.addAllItems(newslist);
+        mAdapter.resetAllItems(newslist);
+    }
+
+    @Override
+    public void loadMoreRecyclerViewItems(ArrayList<NewsModel> newslist) {
+        mAdapter.appendItems(newslist);
     }
 
     @Override
@@ -151,7 +181,7 @@ public class NewsFragment extends Fragment implements NewsContract.View {
 
     @OnClick(R.id.datetime_picker)
     public void onViewClicked() {
-        dpd.show(getActivity().getFragmentManager(), NewsFragment.class.getSimpleName());
+        mDpd.show(getActivity().getFragmentManager(), NewsFragment.class.getSimpleName());
     }
 
 }

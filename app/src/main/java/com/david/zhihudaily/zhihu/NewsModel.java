@@ -8,11 +8,6 @@ public class NewsModel {
     private List<String> images;
     private String id;
 
-    public NewsModel(String title, List<String> images) {
-        this.title = title;
-        this.images = images;
-    }
-
     public List<String> getImageUrl() {
         return images;
     }
@@ -24,4 +19,5 @@ public class NewsModel {
     public String getTitle() {
         return title;
     }
+
 }

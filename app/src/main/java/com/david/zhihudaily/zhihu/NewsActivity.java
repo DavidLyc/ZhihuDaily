@@ -15,11 +15,6 @@ import com.david.zhihudaily.util.NetworkUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
 
 public class NewsActivity extends AppCompatActivity {
 
@@ -33,10 +28,6 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
-        if (!NetworkUtil.isNetworkAvailable()) {
-            Toast.makeText(this, "无网络连接!", Toast.LENGTH_SHORT).show();
-        }
 
         NewsFragment newsFragment = (NewsFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.container);

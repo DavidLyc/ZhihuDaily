@@ -1,5 +1,6 @@
 package com.david.zhihudaily.network;
 
+import com.david.zhihudaily.details.ZhihuContent;
 import com.david.zhihudaily.zhihu.NewsListModel;
 
 import io.reactivex.Observable;
@@ -11,6 +12,9 @@ public interface RetrofitService {
     @GET("latest")
     Observable<NewsListModel> getZhihuNews();
 
+    @GET("before/{date}")
+    Observable<NewsListModel> getZhihuBeforeNews(@Path("date") String date);
+
     @GET("{id}")
-    Observable<ResponseBody> getZhihuNewsDetail(@Path("id") String id);
+    Observable<ZhihuContent> getZhihuNewsDetail(@Path("id") String id);
 }

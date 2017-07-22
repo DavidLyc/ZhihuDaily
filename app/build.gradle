@@ -35,6 +35,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:cardview-v7:$support_version"
     compile "com.android.support:design:$support_version"
+    compile "com.android.support:customtabs:$support_version"
 
     //butterknife
     compile "com.jakewharton:butterknife:$butterknife_version"

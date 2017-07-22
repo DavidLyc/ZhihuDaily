@@ -6,10 +6,11 @@ import com.david.zhihudaily.BaseView;
 interface DetailContract {
 
     interface View extends BaseView<Presenter> {
+        void showZhihuWebContent(ZhihuContent content);
 
     }
 
     interface Presenter extends BasePresenter {
-
+        void loadZhihuContent(String id);
     }
 }

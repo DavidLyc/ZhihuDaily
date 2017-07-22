@@ -40,6 +40,7 @@ public class RetrofitFactory {
             }))
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
             .build();
 
     private static RetrofitService zhihuClient = new Retrofit.Builder()

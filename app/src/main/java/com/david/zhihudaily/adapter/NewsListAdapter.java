@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,9 +52,13 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         return mData == null ? 0 : mData.size();
     }
 
-    public void addAllItems(ArrayList<NewsModel> newslist) {
+    public void resetAllItems(ArrayList<NewsModel> newslist) {
         mData.clear();
-        mData.addAll(newslist);
+        appendItems(newslist);
+    }
+
+    public void appendItems(ArrayList<NewsModel> newslist) {
+        mData.addAll(mData.size(), newslist);
         notifyDataSetChanged();
     }
 

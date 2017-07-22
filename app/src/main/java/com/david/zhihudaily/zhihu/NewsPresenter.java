@@ -1,8 +1,11 @@
 package com.david.zhihudaily.zhihu;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.david.zhihudaily.network.RetrofitFactory;
+import com.david.zhihudaily.util.NetworkUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -38,20 +41,42 @@ public class NewsPresenter implements NewsContract.Presenter {
 
     @Override
     public void getNewsList() {
-        mDisposables.add(
-                RetrofitFactory.getInstance()
-                        .getZhihuNews()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                new Consumer<NewsListModel>() {
-                                    @Override
-                                    public void accept(@NonNull NewsListModel newsListModel)
-                                            throws Exception {
-                                        mView.loadRecyclerViewItems(newsListModel.getStories());
-                                    }
-                                }
-                        )
+        if (!NetworkUtil.isNetworkAvailable()) {
+            //view show error
+            return;
+        }
+
+        mDisposables.add(RetrofitFactory.getInstance()
+                .getZhihuNews()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<NewsListModel>() {
+                    @Override
+                    public void accept(@NonNull NewsListModel newsListModel)
+                            throws Exception {
+                        mView.loadRecyclerViewItems(newsListModel.getStories());
+                    }
+                })
+        );
+    }
+
+    @Override
+    public void getBeforeNews(String date) {
+        if (!NetworkUtil.isNetworkAvailable()) {
+            //view show error
+            return;
+        }
+
+        mDisposables.add(RetrofitFactory.getInstance()
+                .getZhihuBeforeNews(date)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<NewsListModel>() {
+                    @Override
+                    public void accept(@NonNull NewsListModel newsListModel) throws Exception {
+                        mView.loadRecyclerViewItems(newsListModel.getStories());
+                    }
+                })
         );
     }
 
