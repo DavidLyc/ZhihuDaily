@@ -22,6 +22,10 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     private Context mContext;
     private OnItemClickListener mOnItemClickListener;
 
+    public enum LOADTYPE {
+        MORE, RESET
+    }
+
     public NewsListAdapter(ArrayList<NewsModel> data, Context context) {
         mData = data;
         mContext = context;
@@ -58,7 +62,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     }
 
     public void appendItems(ArrayList<NewsModel> newslist) {
-        mData.addAll(mData.size(), newslist);
+        mData.addAll(newslist);
         notifyDataSetChanged();
     }
 

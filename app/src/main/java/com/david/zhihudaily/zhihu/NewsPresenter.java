@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.david.zhihudaily.adapter.NewsListAdapter;
 import com.david.zhihudaily.network.RetrofitFactory;
 import com.david.zhihudaily.util.NetworkUtil;
 
@@ -61,7 +62,8 @@ public class NewsPresenter implements NewsContract.Presenter {
     }
 
     @Override
-    public void getBeforeNews(String date) {
+    public void getBeforeNews(String date, final int loadType) {
+        Log.d("NEwsDate ", date);
         if (!NetworkUtil.isNetworkAvailable()) {
             //view show error
             return;
@@ -74,7 +76,11 @@ public class NewsPresenter implements NewsContract.Presenter {
                 .subscribe(new Consumer<NewsListModel>() {
                     @Override
                     public void accept(@NonNull NewsListModel newsListModel) throws Exception {
-                        mView.loadRecyclerViewItems(newsListModel.getStories());
+                        if (loadType == NewsListAdapter.LOADTYPE.MORE.ordinal()) {
+                            mView.loadMoreRecyclerViewItems(newsListModel.getStories());
+                        } else {
+                            mView.loadRecyclerViewItems(newsListModel.getStories());
+                        }
                     }
                 })
         );

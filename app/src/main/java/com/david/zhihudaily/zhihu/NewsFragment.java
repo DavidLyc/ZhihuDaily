@@ -28,6 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -82,8 +83,8 @@ public class NewsFragment extends Fragment implements NewsContract.View {
                     @Override
                     public void onDateSet(DatePickerDialog view, int year, int month, int day) {
                         String date = TimeUtils.TransformDateToTimeString(year, month, day);
-                        mPresenter.getBeforeNews(date);
-                        mNow = Calendar.getInstance();
+                        mPresenter.getBeforeNews(date, NewsListAdapter.LOADTYPE.RESET.ordinal());
+                        mNow.set(year, month, day);
                     }
                 },
                 mNow.get(Calendar.YEAR),
@@ -112,7 +113,8 @@ public class NewsFragment extends Fragment implements NewsContract.View {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 mNow.set(Calendar.DATE, mNow.get(Calendar.DATE) - 1);
-                mPresenter.getBeforeNews(TimeUtils.TransformDateToTimeString(mNow));
+                mPresenter.getBeforeNews(TimeUtils.TransformDateToTimeString(mNow)
+                        , NewsListAdapter.LOADTYPE.MORE.ordinal());
                 refreshlayout.finishLoadmore();
             }
         });
@@ -124,6 +126,7 @@ public class NewsFragment extends Fragment implements NewsContract.View {
         mNewsItems = new ArrayList<>();
         mAdapter = new NewsListAdapter(mNewsItems, getContext());
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setNestedScrollingEnabled(false);
         mAdapter.setOnItemClickListener(
                 new OnItemClickListener() {
                     @Override
