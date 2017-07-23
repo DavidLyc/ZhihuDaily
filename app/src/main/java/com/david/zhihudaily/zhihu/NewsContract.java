@@ -12,6 +12,8 @@ interface NewsContract {
         void loadRecyclerViewItems(ArrayList<NewsModel> newslist);
 
         void loadMoreRecyclerViewItems(ArrayList<NewsModel> newslist);
+
+        void showNetworkError();
     }
 
     interface Presenter extends BasePresenter {

@@ -12,12 +12,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.david.zhihudaily.R;
 import com.david.zhihudaily.adapter.NewsListAdapter;
 import com.david.zhihudaily.adapter.OnItemClickListener;
 import com.david.zhihudaily.details.DetailActivity;
 import com.david.zhihudaily.util.TimeUtils;
+import com.kennyc.view.MultiStateView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -28,7 +31,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -44,6 +46,10 @@ public class NewsFragment extends Fragment implements NewsContract.View {
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.datetime_picker)
     FloatingActionButton mFab;
+    @BindView(R.id.multiStateView)
+    MultiStateView mMultiStateView;
+    @BindView(R.id.retry)
+    Button mRetryButton;
     private Unbinder unbinder;
     private NewsContract.Presenter mPresenter;
     private NewsListAdapter mAdapter;
@@ -58,11 +64,6 @@ public class NewsFragment extends Fragment implements NewsContract.View {
         return new NewsFragment();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater
@@ -72,6 +73,7 @@ public class NewsFragment extends Fragment implements NewsContract.View {
         initTimePicker();
         initRefreshLayout();
         initRecyclerView();
+        initMultiStateView();
         return root;
     }
 
@@ -149,14 +151,26 @@ public class NewsFragment extends Fragment implements NewsContract.View {
         });
     }
 
+    private void initMultiStateView() {
+        mMultiStateView.getView(MultiStateView.VIEW_STATE_LOADING).findViewById(R.id.loading_view);
+        mMultiStateView.getView(MultiStateView.VIEW_STATE_ERROR).findViewById(R.id.error_view);
+        mMultiStateView.setViewState(MultiStateView.VIEW_STATE_LOADING);
+    }
+
     @Override
     public void loadRecyclerViewItems(ArrayList<NewsModel> newslist) {
+        mMultiStateView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
         mAdapter.resetAllItems(newslist);
     }
 
     @Override
     public void loadMoreRecyclerViewItems(ArrayList<NewsModel> newslist) {
         mAdapter.appendItems(newslist);
+    }
+
+    @Override
+    public void showNetworkError() {
+        mMultiStateView.setViewState(MultiStateView.VIEW_STATE_ERROR);
     }
 
     @Override
@@ -182,9 +196,16 @@ public class NewsFragment extends Fragment implements NewsContract.View {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.datetime_picker)
-    public void onViewClicked() {
-        mDpd.show(getActivity().getFragmentManager(), NewsFragment.class.getSimpleName());
+    @OnClick({R.id.datetime_picker, R.id.retry})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.datetime_picker:
+                mDpd.show(getActivity().getFragmentManager(), NewsFragment.class.getSimpleName());
+                break;
+            case R.id.retry:
+                Toast.makeText(getContext(), "retry", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
 }

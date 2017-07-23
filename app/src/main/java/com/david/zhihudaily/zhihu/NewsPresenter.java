@@ -43,7 +43,7 @@ public class NewsPresenter implements NewsContract.Presenter {
     @Override
     public void getNewsList() {
         if (!NetworkUtil.isNetworkAvailable()) {
-            //view show error
+            mView.showNetworkError();
             return;
         }
 
@@ -63,7 +63,6 @@ public class NewsPresenter implements NewsContract.Presenter {
 
     @Override
     public void getBeforeNews(String date, final int loadType) {
-        Log.d("NEwsDate ", date);
         if (!NetworkUtil.isNetworkAvailable()) {
             //view show error
             return;

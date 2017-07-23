@@ -4,31 +4,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/smartRefreshLayout"
+
+    <com.kennyc.view.MultiStateView
+        android:id="@+id/multiStateView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlAccentColor="@android:color/white"
-        app:srlDisableContentWhenLoading="true"
-        app:srlDisableContentWhenRefresh="true">
+        app:msv_errorView="@layout/error_view"
+        app:msv_loadingView="@layout/loading_view"
+        app:msv_viewState="loading">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/smartRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never">
+            app:srlAccentColor="@android:color/white"
+            app:srlDisableContentWhenLoading="true"
+            app:srlDisableContentWhenRefresh="true">
 
-        </android.support.v7.widget.RecyclerView>
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <com.scwang.smartrefresh.layout.footer.BallPulseFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never" />
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </com.kennyc.view.MultiStateView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/datetime_picker"
