@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.david.zhihudaily.R;
 import com.david.zhihudaily.adapter.NewsListAdapter;
@@ -70,10 +69,10 @@ public class NewsFragment extends Fragment implements NewsContract.View {
             , @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.news_list, container, false);
         unbinder = ButterKnife.bind(this, root);
+        initMultiStateView();
         initTimePicker();
         initRefreshLayout();
         initRecyclerView();
-        initMultiStateView();
         return root;
     }
 
@@ -161,6 +160,7 @@ public class NewsFragment extends Fragment implements NewsContract.View {
     public void loadRecyclerViewItems(ArrayList<NewsModel> newslist) {
         mMultiStateView.setViewState(MultiStateView.VIEW_STATE_CONTENT);
         mAdapter.resetAllItems(newslist);
+        mRecyclerView.smoothScrollToPosition(0);
     }
 
     @Override

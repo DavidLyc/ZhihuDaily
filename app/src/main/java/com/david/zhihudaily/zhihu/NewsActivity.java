@@ -3,15 +3,13 @@ package com.david.zhihudaily.zhihu;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.david.zhihudaily.R;
-import com.david.zhihudaily.network.RetrofitFactory;
 import com.david.zhihudaily.util.ActivityUtils;
-import com.david.zhihudaily.util.NetworkUtil;
+import com.david.zhihudaily.util.CleanUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,14 +18,14 @@ public class NewsActivity extends AppCompatActivity {
 
     NewsPresenter mPresenter;
     @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
 
         NewsFragment newsFragment = (NewsFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.container);
@@ -52,6 +50,13 @@ public class NewsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.settings:
                 Toast.makeText(this, "开发中", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.cleanCache:
+                if (CleanUtils.cleanInternalCache(this)) {
+                    Toast.makeText(this, "清理成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "清理失败", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         return true;
