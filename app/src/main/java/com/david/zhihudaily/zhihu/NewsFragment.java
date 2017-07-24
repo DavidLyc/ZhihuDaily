@@ -203,7 +203,8 @@ public class NewsFragment extends Fragment implements NewsContract.View {
                 mDpd.show(getActivity().getFragmentManager(), NewsFragment.class.getSimpleName());
                 break;
             case R.id.retry:
-                Toast.makeText(getContext(), "retry", Toast.LENGTH_SHORT).show();
+                mMultiStateView.setViewState(MultiStateView.VIEW_STATE_LOADING);
+                mPresenter.getNewsList();
                 break;
         }
     }

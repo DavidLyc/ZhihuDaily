@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">ZhihuDaily</string>
     <string name="news_preview_image">LOADING</string>
+    <string name="error_tiping">网络出问题了...</string>
+    <string name="retry">重试</string>
 </resources>

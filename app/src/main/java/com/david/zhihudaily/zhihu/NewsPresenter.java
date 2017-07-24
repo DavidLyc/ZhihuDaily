@@ -1,8 +1,6 @@
 package com.david.zhihudaily.zhihu;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.david.zhihudaily.adapter.NewsListAdapter;
 import com.david.zhihudaily.network.RetrofitFactory;
@@ -64,7 +62,7 @@ public class NewsPresenter implements NewsContract.Presenter {
     @Override
     public void getBeforeNews(String date, final int loadType) {
         if (!NetworkUtil.isNetworkAvailable()) {
-            //view show error
+            mView.showNetworkError();
             return;
         }
 
