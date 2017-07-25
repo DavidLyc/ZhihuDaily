@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.david.zhihudaily.R;
 import com.david.zhihudaily.zhihu.NewsModel;
 
@@ -47,7 +46,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
                 .load(news.getImageUrl().get(0))
                 .asBitmap()
                 .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.mImageView);
     }
 

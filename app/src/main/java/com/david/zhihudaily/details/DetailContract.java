@@ -8,6 +8,7 @@ interface DetailContract {
     interface View extends BaseView<Presenter> {
         void showZhihuWebContent(ZhihuContent content);
 
+        void loadCoverImage(String imageUrl);
     }
 
     interface Presenter extends BasePresenter {

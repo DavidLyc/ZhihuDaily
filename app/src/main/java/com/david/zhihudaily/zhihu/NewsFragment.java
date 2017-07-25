@@ -132,7 +132,7 @@ public class NewsFragment extends Fragment implements NewsContract.View {
                 new OnItemClickListener() {
                     @Override
                     public void onClick(View view, NewsModel newsModel) {
-                        EventBus.getDefault().postSticky(newsModel.getId());
+                        EventBus.getDefault().postSticky(newsModel);
                         startActivity(new Intent(getContext(), DetailActivity.class));
                     }
                 }

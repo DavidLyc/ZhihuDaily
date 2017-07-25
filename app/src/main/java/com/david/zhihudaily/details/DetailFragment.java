@@ -6,14 +6,16 @@ import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.david.zhihudaily.R;
 import com.david.zhihudaily.zhihu.NewsModel;
 
@@ -30,13 +32,12 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @BindView(R.id.webview)
     WebView mWebView;
+    @BindView(R.id.detail_coverImage)
+    ImageView mCoverImage;
     Unbinder unbinder;
+    @BindView(R.id.detail_collapsing_toolbar)
+    Toolbar mToolbar;
     private DetailContract.Presenter mPresenter;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Nullable
     @Override
@@ -78,6 +79,8 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void showZhihuWebContent(@NonNull ZhihuContent content) {
+        loadCoverImage(content.getImage());
+        mToolbar.setTitle(content.getTitle());
         String result = content.getBody();
         result = result.replace("<div class=\"img-place-holder\">", "");
         result = result.replace("<div class=\"headline\">", "");
@@ -95,10 +98,19 @@ public class DetailFragment extends Fragment implements DetailContract.View {
         mWebView.loadDataWithBaseURL("x-data://base", result, "text/html", "utf-8", null);
     }
 
+    @Override
+    public void loadCoverImage(String imageUrl) {
+        Glide.with(getContext())
+                .load(imageUrl)
+                .asBitmap()
+                .centerCrop()
+                .into(mCoverImage);
+    }
+
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(String id) {
-        mPresenter.loadZhihuContent(id);
-        EventBus.getDefault().removeStickyEvent(id);
+    public void onMessageEvent(NewsModel news) {
+        mPresenter.loadZhihuContent(news.getId());
+        EventBus.getDefault().removeStickyEvent(news);
     }
 
     @Override
