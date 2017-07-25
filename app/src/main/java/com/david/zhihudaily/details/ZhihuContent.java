@@ -5,7 +5,7 @@ public class ZhihuContent {
     private String body;
     private String title;
     private String image;
-    private String id;
+    private String share_url;
 
     public String getBody() {
         return body;
@@ -17,5 +17,9 @@ public class ZhihuContent {
 
     public String getImage() {
         return image;
+    }
+
+    public String getShareUrl() {
+        return share_url;
     }
 }

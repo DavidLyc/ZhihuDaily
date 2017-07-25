@@ -4,4 +4,5 @@
     <string name="error_tiping">网络出问题了…</string>
     <string name="retry">重试</string>
     <string name="main_setting">设置</string>
+    <string name="share_to">分享至</string>
 </resources>

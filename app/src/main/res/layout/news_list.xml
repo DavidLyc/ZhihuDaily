@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <com.kennyc.view.MultiStateView
         android:id="@+id/multiStateView"
         android:layout_width="match_parent"
@@ -46,7 +45,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/datetime_picker"
-        android:tint="@android:color/white"
         app:backgroundTint="@color/materialGreen"
         app:elevation="@dimen/fab_elevation" />
 

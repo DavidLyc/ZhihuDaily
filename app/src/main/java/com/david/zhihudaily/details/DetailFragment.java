@@ -1,9 +1,12 @@
 package com.david.zhihudaily.details;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +28,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.annotations.NonNull;
 
@@ -37,7 +41,10 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     Unbinder unbinder;
     @BindView(R.id.detail_collapsing_toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.share_fab)
+    FloatingActionButton mShareFab;
     private DetailContract.Presenter mPresenter;
+    private ZhihuContent mZhihuContent;
 
     @Nullable
     @Override
@@ -79,6 +86,7 @@ public class DetailFragment extends Fragment implements DetailContract.View {
 
     @Override
     public void showZhihuWebContent(@NonNull ZhihuContent content) {
+        mZhihuContent = content;
         loadCoverImage(content.getImage());
         mToolbar.setTitle(content.getTitle());
         String result = content.getBody();
@@ -105,6 +113,18 @@ public class DetailFragment extends Fragment implements DetailContract.View {
                 .asBitmap()
                 .centerCrop()
                 .into(mCoverImage);
+    }
+
+    @Override
+    public void share() {
+        try {
+            Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
+            String shareText = mZhihuContent.getTitle() + mZhihuContent.getShareUrl() + " -来自读书亭";
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_to)));
+        } catch (android.content.ActivityNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
@@ -141,5 +161,10 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.share_fab)
+    public void onViewClicked() {
+        share();
     }
 }
