@@ -35,7 +35,7 @@ public class NewsActivity extends AppCompatActivity {
                     newsFragment, R.id.container);
         }
 
-        mPresenter = new NewsPresenter(newsFragment);
+        mPresenter = new NewsPresenter(newsFragment, this);
 
     }
 

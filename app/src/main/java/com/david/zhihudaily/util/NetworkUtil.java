@@ -1,10 +1,20 @@
 package com.david.zhihudaily.util;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 public class NetworkUtil {
 
-    public static boolean isNetworkAvailable() {
-        String ip = "223.5.5.5";  //阿里巴巴公共ip
-        ShellUtils.CommandResult cmdResult = ShellUtils.execCmd(String.format("ping -c 1 %s", ip), false);
-        return cmdResult.result == 0;
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context
+                .getApplicationContext().getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+        if (manager == null) {
+            return false;
+        }
+        NetworkInfo networkinfo = manager.getActiveNetworkInfo();
+        return !(networkinfo == null || !networkinfo.isAvailable());
     }
+
 }

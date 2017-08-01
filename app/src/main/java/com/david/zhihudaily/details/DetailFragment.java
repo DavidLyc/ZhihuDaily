@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -119,7 +118,8 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     public void share() {
         try {
             Intent shareIntent = new Intent().setAction(Intent.ACTION_SEND).setType("text/plain");
-            String shareText = mZhihuContent.getTitle() + mZhihuContent.getShareUrl() + " -来自读书亭";
+            String shareText = mZhihuContent.getTitle() + mZhihuContent.getShareUrl()
+                    + getString(R.string.share_tail);
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_to)));
         } catch (android.content.ActivityNotFoundException ex) {

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'blockcanaryex'
 
 android {
     compileSdkVersion 26
@@ -62,6 +63,11 @@ dependencies {
     debugCompile "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+
+    //blockcanaryex
+    debugCompile "com.letv.sarrsdesktop:BlockCanaryExJRT:$blockcanaryex_version"
+    releaseCompile "com.letv.sarrsdesktop:BlockCanaryExJRTNoOp:$blockcanaryex_version"
+    testCompile "com.letv.sarrsdesktop:BlockCanaryExJRTNoOp:$blockcanaryex_version"
 
     //eventBus
     compile "org.greenrobot:eventbus:$eventBus_version"
