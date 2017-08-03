@@ -24,6 +24,7 @@ import com.david.zhihudaily.zhihu.NewsModel;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.zackratos.ultimatebar.UltimateBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,8 +34,6 @@ import io.reactivex.annotations.NonNull;
 
 public class DetailFragment extends Fragment implements DetailContract.View {
 
-    @BindView(R.id.webview)
-    WebView mWebView;
     @BindView(R.id.detail_coverImage)
     ImageView mCoverImage;
     Unbinder unbinder;
@@ -42,8 +41,17 @@ public class DetailFragment extends Fragment implements DetailContract.View {
     Toolbar mToolbar;
     @BindView(R.id.share_fab)
     FloatingActionButton mShareFab;
+    @BindView(R.id.webview)
+    WebView mWebView;
     private DetailContract.Presenter mPresenter;
     private ZhihuContent mZhihuContent;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        UltimateBar ultimateBar = new UltimateBar(getActivity());
+        ultimateBar.setImmersionBar();
+    }
 
     @Nullable
     @Override
