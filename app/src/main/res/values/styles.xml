@@ -25,29 +25,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
-    <style name="cardStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="cardRelativeLayoutStyle" parent="baseLayoutParam">
-        <item name="android:layout_margin">5dp</item>
-    </style>
-
-    <style name="cardImageViewStyle">
-        <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:padding">10dp</item>
-        <item name="android:layout_height">95dp</item>
-        <item name="android:layout_width">95dp</item>
-    </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.TranslucentStatus">
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
 </resources>
