@@ -2,7 +2,6 @@ package com.david.zhihudaily.zhihu;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.david.zhihudaily.adapter.NewsListAdapter;
 import com.david.zhihudaily.network.RetrofitFactory;
@@ -89,4 +88,5 @@ public class NewsPresenter implements NewsContract.Presenter {
     public void start() {
 
     }
+
 }

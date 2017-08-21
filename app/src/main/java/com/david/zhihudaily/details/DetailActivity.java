@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.david.zhihudaily.R;
 import com.david.zhihudaily.util.ActivityUtils;
 
-import org.zackratos.ultimatebar.UltimateBar;
-
 import butterknife.ButterKnife;
 
 public class DetailActivity extends AppCompatActivity {

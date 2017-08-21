@@ -181,6 +181,7 @@ public class NewsFragment extends Fragment implements NewsContract.View {
     @Override
     public void onResume() {
         super.onResume();
+        mPresenter.start();
         mPresenter.subscribe();
     }
 
